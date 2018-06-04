@@ -5,7 +5,7 @@ library(viridis)
 ######CREATING A POPULATION ###################
 ###############################################
 
-POP_DAT <- read.csv("pop.csv")
+POP_DAT <- read.csv("pa_pop_2010.csv")
 POP_DAT$County<- tolower(POP_DAT$County)
 
 
