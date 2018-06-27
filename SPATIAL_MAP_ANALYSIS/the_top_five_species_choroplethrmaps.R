@@ -1,10 +1,14 @@
+
+library(viridis)
 library(ggplot2)
 library(dplyr)
 library(lemon)
-################
+############################################################################
 ###Creating an incidence map based on population density of Pennslyvania####
 ############################################################################
-
+##########################################
+###THIS IS FOR FIGURE 3 of the manucsript#
+##########################################
 
 #The five major tick species: scapularis, cookei, americanum, sangineus, and variabilis
 FIVE_TICK_SPECIES <- subset(PA_SUB, PA_SUB$Species == 'scapularis' |
@@ -14,27 +18,32 @@ FIVE_TICK_SPECIES <- subset(PA_SUB, PA_SUB$Species == 'scapularis' |
                               PA_SUB$Species == 'americanum')
 AGG_FIVE<-aggregate(FIVE_TICK_SPECIES$submission,
                     by=list(FIVE_TICK_SPECIES$Year,FIVE_TICK_SPECIES$Species),
-          'sum')
-###You need the population data
+                    'sum')
+###You need the population data and the
 ###This reads in the PA population in 2010
-PA_POP_2010 <- read.csv("pop.csv")
+
+
+PA_POP_2010 <- read.csv("pa_pop_2010.csv") #GET THIS FROMT HE PA_POP_DAT DIRECTORY
 PA_POP_2010$Total.Pop<- as.numeric(gsub(',', '', PA_POP_2010$Total.Pop))
-
+###County Populuation Data
 PA_POP_2010$County <- tolower(PA_POP_2010$County)
+###County Spatial Information
+counties <- map_data("county")
+pa_county <- subset(counties, region == 'pennsylvania')
+colnames(pa_county)[6] <- 'County'
 
-###Getting the spatial data for PA counties
-
-
-################
-###Scapularis###
+#######################
+###I. Scapularis###
 ################
 SCAP_DATA <- subset(FIVE_TICK_SPECIES, FIVE_TICK_SPECIES$Species=='scapularis')
 
 SCAP_DATA_AGG <- aggregate(SCAP_DATA$submission, by=list(SCAP_DATA$County),'sum')
 
-#The first row was unknown locaton
-
-SCAP_DATA_AGG <- SCAP_DATA_AGG[-1,]
+###GETS RID OF ANY DATA THAT HAS NO RECORD. 
+SCAP_DATA_AGG <- subset(SCAP_DATA_AGG,SCAP_DATA_AGG$Group.1 != ""&
+                          SCAP_DATA_AGG$Group.1 != 'no record ')
+                          
+#now let's rename the data frame
 colnames(SCAP_DATA_AGG) <- c("County","Submission")
 
 pa_county_scap <-left_join(PA_POP_2010, SCAP_DATA_AGG, by=c('County'))
@@ -52,9 +61,9 @@ PA_SCAP_SPAT <- left_join(pa_county, pa_county_scap,by=c('County'))
 SCAP_INCIDENCE<-ggplot(PA_SCAP_SPAT, aes(x= long, y= lat,group=group))+
   geom_polygon(data=PA_SCAP_SPAT,   aes(long+0.05,lat-0.05), fill="grey50")+
   geom_polygon(data=PA_SCAP_SPAT,
-  aes(x= long, y= lat,group=group, fill =CUT_SCAP),color='black')+
+               aes(x= long, y= lat,group=group, fill =CUT_SCAP),color='black')+
   scale_fill_viridis(discrete=TRUE,option='magma',alpha=1,
-  name = 'Incidence\nper 100,000')+
+                     name = 'Incidence\nper 100,000')+
   coord_map()+
   ggtitle("Ixodes scapularis") + 
   theme_void()+
@@ -83,8 +92,8 @@ pa_county_var$incidence <-
   (pa_county_var$Submission/pa_county_var$Total.Pop)*100000
 
 pa_county_var$CUT_VAR<-cut(pa_county_var$incidence, 
-                             breaks=  c(0,1,10,40,100,200,500,1000),
-                             include.lowest = TRUE,dig.lab=10)
+                           breaks=  c(0,1,10,40,100,200,500,1000),
+                           include.lowest = TRUE,dig.lab=10)
 
 PA_VAR_SPAT <- left_join(pa_county, pa_county_var,by=c('County'))
 
@@ -110,7 +119,7 @@ COOK_DATA <- subset(FIVE_TICK_SPECIES,
                     FIVE_TICK_SPECIES$Species=='cookei')
 
 COOK_DATA_AGG <- aggregate(COOK_DATA$submission, 
-                          by=list(COOK_DATA$County),'sum')
+                           by=list(COOK_DATA$County),'sum')
 
 #The first row was unknown locaton
 
@@ -126,20 +135,20 @@ pa_county_cook$incidence <-
 pa_county_cook$CUT_COOK<-cut(pa_county_cook$incidence, 
                              breaks=  c(0,1,10,40,100,200,500,1000),
                              include.lowest = TRUE,dig.lab=10
-                           )
+)
 
 PA_COOK_SPAT <- left_join(pa_county, pa_county_cook,by=c('County'))
 
 COOK_INCIDENCE<-ggplot(PA_COOK_SPAT, aes(x= long, y= lat,group=group))+
   geom_polygon(data=PA_COOK_SPAT,aes(long+0.05,lat-0.05), fill="grey50")+
   geom_polygon(data=PA_COOK_SPAT, aes(x= long, y= lat,group=group,
-                                 fill =CUT_COOK),color='black')+
+                                      fill =CUT_COOK),color='black')+
   scale_fill_viridis(discrete=TRUE,option='magma',alpha=0.9,
                      name = 'Incidence\nper 100,000',drop=FALSE)+coord_map()+
   ggtitle("Ixodes cookei") + theme_void()+
   theme(plot.title = 
           element_text(hjust = 0.5,lineheight=.8, face="bold.italic",
-                                  size=15))
+                       size=15))
 COOK_INCIDENCE
 
 
@@ -149,10 +158,10 @@ COOK_INCIDENCE
 
 
 AMERI_DATA <- subset(FIVE_TICK_SPECIES,
-                    FIVE_TICK_SPECIES$Species=='americanum')
+                     FIVE_TICK_SPECIES$Species=='americanum')
 
 AMERI_DATA_AGG <- aggregate(AMERI_DATA$submission, 
-                           by=list(AMERI_DATA$County),'sum')
+                            by=list(AMERI_DATA$County),'sum')
 
 #The first row was unknown locaton
 
@@ -190,10 +199,10 @@ AMERI_INCIDENCE
 
 
 SANG_DATA <- subset(FIVE_TICK_SPECIES,
-                     FIVE_TICK_SPECIES$Species=='sanguineus')
+                    FIVE_TICK_SPECIES$Species=='sanguineus')
 
 SANG_DATA_AGG <- aggregate(SANG_DATA$submission, 
-                            by=list(SANG_DATA$County),'sum')
+                           by=list(SANG_DATA$County),'sum')
 
 #The first row was unknown locaton
 
