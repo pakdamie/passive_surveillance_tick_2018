@@ -16,7 +16,7 @@ FIVE_TICK_SPECIES <- subset(PA_SUB, PA_SUB$Species == 'scapularis' |
                               PA_SUB$Species == 'sanguineus'|
                               PA_SUB$Species == 'variabilis'|
                               PA_SUB$Species == 'americanum')
-AGG_FIVE<-aggregate(FIVE_TICK_SPECIES$submission,
+AGG_FIVE<-aggregate(FIVE_TICK_SPECIES$Individuals,
                     by=list(FIVE_TICK_SPECIES$Year,FIVE_TICK_SPECIES$Species),
                     'sum')
 ###You need the population data and the
@@ -37,20 +37,20 @@ colnames(pa_county)[6] <- 'County'
 ################
 SCAP_DATA <- subset(FIVE_TICK_SPECIES, FIVE_TICK_SPECIES$Species=='scapularis')
 
-SCAP_DATA_AGG <- aggregate(SCAP_DATA$submission, by=list(SCAP_DATA$County),'sum')
+SCAP_DATA_AGG <- aggregate(SCAP_DATA$Individuals, by=list(SCAP_DATA$County),'sum')
 
 ###GETS RID OF ANY DATA THAT HAS NO RECORD. 
 SCAP_DATA_AGG <- subset(SCAP_DATA_AGG,SCAP_DATA_AGG$Group.1 != ""&
                           SCAP_DATA_AGG$Group.1 != 'no record ')
                           
 #now let's rename the data frame
-colnames(SCAP_DATA_AGG) <- c("County","Submission")
+colnames(SCAP_DATA_AGG) <- c("County","Individuals")
 
 pa_county_scap <-left_join(PA_POP_2010, SCAP_DATA_AGG, by=c('County'))
-pa_county_scap$Submission[is.na(pa_county_scap$Submission)==TRUE]=0
+pa_county_scap$Individuals[is.na(pa_county_scap$Individuals)==TRUE]=0
 
 pa_county_scap$incidence <- 
-  (pa_county_scap$Submission/pa_county_scap$Total.Pop)*100000
+  (pa_county_scap$Individuals/pa_county_scap$Total.Pop)*100000
 
 pa_county_scap$CUT_SCAP<-cut(pa_county_scap$incidence, 
                              breaks=  c(0,1,10,40,100,200,500,1000),
@@ -69,7 +69,9 @@ SCAP_INCIDENCE<-ggplot(PA_SCAP_SPAT, aes(x= long, y= lat,group=group))+
   theme_void()+
   theme(plot.title = element_text(hjust = 0.5,lineheight=.8, face="bold.italic",
                                   size=15))
-
+pa_county_scapincidence <- cbind.data.frame(County = pa_county_scap$County, 
+                                            Incidence = pa_county_scap$incidence)
+pa_county_scapincidence[order(-pa_county_scapincidence$Incidence),]
 ################
 ###Variabilis###
 ################
@@ -77,19 +79,21 @@ SCAP_INCIDENCE<-ggplot(PA_SCAP_SPAT, aes(x= long, y= lat,group=group))+
 
 VAR_DATA <- subset(FIVE_TICK_SPECIES, FIVE_TICK_SPECIES$Species=='variabilis')
 
-VAR_DATA_AGG <- aggregate(VAR_DATA$submission, 
+VAR_DATA_AGG <- aggregate(VAR_DATA$Individuals, 
                           by=list(VAR_DATA$County),'sum')
 
 #The first row was unknown locaton
 
-VAR_DATA_AGG <- VAR_DATA_AGG[-1,]
-colnames(VAR_DATA_AGG) <- c("County","Submission")
+VAR_DATA_AGG<- subset(VAR_DATA_AGG,VAR_DATA_AGG$Group.1 != ""&
+                        VAR_DATA_AGG$Group.1 != 'no record ')
+
+colnames(VAR_DATA_AGG) <- c("County","Individuals")
 
 pa_county_var <-left_join(PA_POP_2010,VAR_DATA_AGG, by=c('County'))
-pa_county_var$Submission[is.na(pa_county_var$Submission)==TRUE]=0
+pa_county_var$Individuals[is.na(pa_county_var$Individuals)==TRUE]=0
 
 pa_county_var$incidence <- 
-  (pa_county_var$Submission/pa_county_var$Total.Pop)*100000
+  (pa_county_var$Individuals/pa_county_var$Total.Pop)*100000
 
 pa_county_var$CUT_VAR<-cut(pa_county_var$incidence, 
                            breaks=  c(0,1,10,40,100,200,500,1000),
@@ -109,7 +113,9 @@ VAR_INCIDENCE<-ggplot(PA_VAR_SPAT, aes(x= long, y= lat,group=group))+
                                   size=15))
 VAR_INCIDENCE
 
-
+pa_county_varincidence <- cbind.data.frame(County = pa_county_var$County, 
+                                            Incidence = pa_county_var$incidence)
+pa_county_varincidence [order(-pa_county_varincidence $Incidence),]
 ################
 ###Cookei ###
 ################
@@ -118,19 +124,20 @@ VAR_INCIDENCE
 COOK_DATA <- subset(FIVE_TICK_SPECIES,
                     FIVE_TICK_SPECIES$Species=='cookei')
 
-COOK_DATA_AGG <- aggregate(COOK_DATA$submission, 
+COOK_DATA_AGG <- aggregate(COOK_DATA$Individuals, 
                            by=list(COOK_DATA$County),'sum')
 
 #The first row was unknown locaton
 
-COOK_DATA_AGG <- COOK_DATA_AGG[-1,]
-colnames(COOK_DATA_AGG) <- c("County","Submission")
+COOK_DATA_AGG<- subset(COOK_DATA_AGG,COOK_DATA_AGG$Group.1 != ""&
+                         COOK_DATA_AGG$Group.1 != 'no record ')
+colnames(COOK_DATA_AGG) <- c("County","Individuals")
 
 pa_county_cook<-left_join(PA_POP_2010,COOK_DATA_AGG, by=c('County'))
-pa_county_cook$Submission[is.na(pa_county_cook$Submission)==TRUE]=0
+pa_county_cook$Individuals[is.na(pa_county_cook$Individuals)==TRUE]=0
 
 pa_county_cook$incidence <- 
-  (pa_county_cook$Submission/pa_county_cook$Total.Pop)*100000
+  (pa_county_cook$Individuals/pa_county_cook$Total.Pop)*100000
 
 pa_county_cook$CUT_COOK<-cut(pa_county_cook$incidence, 
                              breaks=  c(0,1,10,40,100,200,500,1000),
@@ -151,7 +158,9 @@ COOK_INCIDENCE<-ggplot(PA_COOK_SPAT, aes(x= long, y= lat,group=group))+
                        size=15))
 COOK_INCIDENCE
 
-
+pa_county_cookincidence <- cbind.data.frame(County = pa_county_cook$County, 
+                                           Incidence = pa_county_cook$incidence)
+pa_county_cookincidence [order(-pa_county_cookincidence $Incidence),]
 ################
 ###AMERICANUM###
 ################
@@ -160,19 +169,20 @@ COOK_INCIDENCE
 AMERI_DATA <- subset(FIVE_TICK_SPECIES,
                      FIVE_TICK_SPECIES$Species=='americanum')
 
-AMERI_DATA_AGG <- aggregate(AMERI_DATA$submission, 
+AMERI_DATA_AGG <- aggregate(AMERI_DATA$Individuals, 
                             by=list(AMERI_DATA$County),'sum')
 
 #The first row was unknown locaton
 
-AMERI_DATA_AGG <- AMERI_DATA_AGG[-1,]
-colnames(AMERI_DATA_AGG) <- c("County","Submission")
+AMERI_DATA_AGG<- subset(AMERI_DATA_AGG,AMERI_DATA_AGG$Group.1 != ""&
+                          AMERI_DATA_AGG$Group.1 != 'no record')
+colnames(AMERI_DATA_AGG) <- c("County","Individuals")
 
 pa_county_ameri<-left_join(PA_POP_2010,AMERI_DATA_AGG, by=c('County'))
-pa_county_ameri$Submission[is.na(pa_county_ameri$Submission)==TRUE]=0
+pa_county_ameri$Individuals[is.na(pa_county_ameri$Individuals)==TRUE]=0
 
 pa_county_ameri$incidence <- 
-  (pa_county_ameri$Submission/pa_county_ameri$Total.Pop)*100000
+  (pa_county_ameri$Individuals/pa_county_ameri$Total.Pop)*100000
 
 pa_county_ameri$CUT_AMERI<-cut(pa_county_ameri$incidence, 
                                breaks=  c(0,1,10,40,100,200,500,1000),

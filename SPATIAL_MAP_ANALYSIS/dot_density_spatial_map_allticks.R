@@ -16,7 +16,7 @@ library(data.table)
 ###AGGREGATE THE NUMBER OF SUBMISSIONS BY BOTH COUNTY AND SPECIES
 PA_SUB_GROUPED <- cbind.data.frame(County =PA_SUB$County,
                                    Species = PA_SUB$Species,
-                                   Sub = PA_SUB$submission)
+                                   Sub = PA_SUB$Individuals)
 PA_SUB_GROUPED $Species<- revalue(PA_SUB_GROUPED$Species,
                   c("leporispalustris"="Ixodidae species",
                     "cajennense" = 'Ambloymma species',
@@ -63,9 +63,9 @@ PA_SUB_SP_3 <- subset(PA_SUB_SP_2, PA_SUB_SP_2$Group.2 !=''&
 PA_SUB_SP_3$Group.2<- revalue(PA_SUB_SP_3$Group.2, c("sp."="Ixodidae"))
 ###Rename columns 
 ###THIS IS THE FIXED DATA FRAME THAT WILL BE USED FOR THE GRAPHING
-colnames(PA_SUB_SP_3)<- c('County','Species','Submission')
+colnames(PA_SUB_SP_3)<- c('County','Species','Individuals')
 
-colnames(PA_SUB_GROUPED_SP) <- c('Species', 'County', 'Submission')
+colnames(PA_SUB_GROUPED_SP) <- c('Species', 'County', 'Individuals')
 ###SHORTENING
 
 

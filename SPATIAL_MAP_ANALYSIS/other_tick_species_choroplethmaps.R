@@ -1,5 +1,5 @@
 ################################
-#######FIGURE 3 ################
+#######FIGURE 5 ################
 ################################
 
 library(dplyr)
@@ -79,7 +79,7 @@ CAR_OCCURENCE<- ggplot(CAR_PA_SPAT , aes(x= long,y=lat, group=group))+
 
 DERM<- subset(PA_SUB, PA_SUB$Genus == 'Dermacentor' &PA_SUB$Species !=
                'variabilis')
-DERM_PA<- aggregate(DERM$submission, by=list(DERM$County),'sum')
+DERM_PA<- aggregate(DERM$submission, by=list(DERM$County, DERM$Species),'sum')
 colnames(DERM_PA)<- c('County','Submission')
 DERM_PA$presence <- 'Yes'
 
@@ -122,7 +122,7 @@ HAE_OCCURENCE<-ggplot(HAE_PA_SPAT , aes(x= long,y=lat, group=group))+
 IXODES <- subset(PA_SUB, PA_SUB$Genus == 'Ixodes' & 
                    PA_SUB$Species != 'scapularis'&
                    PA_SUB$Species != 'cookei')
-IXODES_PA<- aggregate(IXODES$submission, by=list(IXODES$County),'sum')
+IXODES_PA<- aggregate(IXODES$submission, by=list(IXODES$County, IXODES$Species),'sum')
 colnames(IXODES_PA)<- c('County','Submission')
 IXODES_PA$presence <- 'Yes'
 
