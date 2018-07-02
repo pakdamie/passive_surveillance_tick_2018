@@ -59,6 +59,8 @@ PA_SUB$County[PA_SUB$County == 'Palmyra Township'] <- 'Wayne'
 PA_SUB$County[PA_SUB$County == 'Chester or Virginia '] <- 'Chester'
 PA_SUB$County[PA_SUB$County == 'Monroe or Pike'] <- 'Monroe'
 PA_SUB$County[PA_SUB$County == 'Northhampton or Lehigh'] <- 'Northampton'
+PA_SUB$County[PA_SUB$County == 'Northhampton'] <- 'Northampton'
+
 PA_SUB$County[PA_SUB$County == 'Potter or York'] <- 'Potter'
 PA_SUB$County[PA_SUB$County == 'Delaware\vMedia\v'] <- 'Delaware'
 PA_SUB$County[PA_SUB$County == 'Cameron or Mckean'] <- 'Cameron'
@@ -70,6 +72,8 @@ PA_SUB$County[PA_SUB$County == 'Crawford or Venango'] <- 'Crawford'
 PA_SUB$County[PA_SUB$County == 'Wayne County'] <- 'Wayne'
 PA_SUB$County[PA_SUB$County == 'Warren County'] <- 'Warren'
 PA_SUB$County[PA_SUB$County == 'Snyder?'] <- 'Snyder'
+PA_SUB$County[PA_SUB$County == 'Snyder '] <- 'Snyder'
+
 PA_SUB$County[PA_SUB$County == 'Curwensville'] <- 'Clearfield'
 PA_SUB$County[PA_SUB$County == 'Near Ronova (Sinnema Honing State Park'] <- 'Clinton'
 PA_SUB$County[PA_SUB$County == 'Northumberland ?'] <- 'Northumberland'
@@ -84,6 +88,7 @@ PA_SUB$County[PA_SUB$County == 'New Jersey'] <- 'No record'
 PA_SUB$County[PA_SUB$County == 'Canada'] <- 'No record'
 PA_SUB$County[PA_SUB$County == 'Venengo'] <- 'Venango'
 PA_SUB$County[PA_SUB$County == '<NA>' ] <- 'No record'
+PA_SUB$County[PA_SUB$County == 'delaware ' ] <- 'delaware'
 
 PA_SUB$County <- tolower(PA_SUB$County)
 PA_SUB<- subset(PA_SUB, PA_SUB$County != "No record")
@@ -127,4 +132,8 @@ PA_SUB$month <- as.numeric(format(PA_SUB$Date, '%m'))
 ##########################################################################
 PA_SUB$submission <-1
 
+
+###HOW MANY TICK SUBMISSIONS WERE THERE IN 1990"
+
+aggregate(PA_SUB$Individuals,list(PA_SUB$Year),'sum' )
 

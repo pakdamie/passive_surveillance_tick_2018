@@ -37,17 +37,17 @@ PA_2_SPLIT <- split(PA_SUB, PA_SUB$Decade)
 MONTHLY_PROP <- NULL
 for (i in seq(1,length(PA_2_SPLIT))){
   TMP <- PA_2_SPLIT[[i]]
-  TMP2= count(TMP , 'month')
-  TMP2$prop <- TMP2$freq/sum(TMP2$freq)
-  TMP2$Decade <- unique(TMP$Decade)
-  MONTHLY_PROP[[i]] <- TMP2
+  TMP_AGG <- aggregate(TMP$Individuals, by=list(TMP$month),'sum' )
+  TMP_AGG$prop <-(TMP_AGG$x)/sum(TMP_AGG$x)
+  TMP_AGG$Decade <- unique(TMP$Decade)
+  MONTHLY_PROP[[i]] <-  TMP_AGG
 }
 BY_DECADES_MONTH<-na.omit(do.call(rbind,MONTHLY_PROP))
 
-ggplot(BY_DECADES_MONTH, aes(x= as.factor(month), y = prop, fill=month))+
+ggplot(BY_DECADES_MONTH, aes(x= as.factor(Group.1), y = prop, fill=Group.1))+
   geom_bar(stat='identity',color='black',width =1)+
   scale_fill_viridis(guide=FALSE)+
-  facet_grid(Decade~., switch = 'both')+theme_bw()+
+facet_wrap(~Decade)+theme_bw()+
   ylab("Proportions")+
   scale_x_discrete(name='Month',
                    labels= c("Jan","Feb","Mar","Apr","May",
@@ -55,7 +55,8 @@ ggplot(BY_DECADES_MONTH, aes(x= as.factor(month), y = prop, fill=month))+
                              "Dec"))+
       theme(panel.grid.major = element_blank(),
       panel.grid.minor = element_blank())+
-      ggtitle("Monthly proportions of ticks submitted by decades (1900-2017)")
+      ggtitle("Monthly proportions of ticks submitted by decades (1900-2017)")+
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 1.1)) 
 ############################################################################
 #The five major tick species: scapularis, cookei, americanum, sangineus,####
 #and variabilis                                                          ###
