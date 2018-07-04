@@ -63,63 +63,28 @@ facet_wrap(~Decade)+theme_bw()+
 ############################################################################
 SCAPULARIS_SEASON <- subset(PA_SUB, PA_SUB$Species == 'scapularis')
 
-SCAP_SUB<-cbind.data.frame(sub = SCAPULARIS_SEASON$submission,month= SCAPULARIS_SEASON$month)
+SCAP_SUB<-cbind.data.frame(Ind = SCAPULARIS_SEASON$Individuals,month= SCAPULARIS_SEASON$month)
+
+SCAP_SUB_AGG <- aggregate(SCAP_SUB$Ind, list(SCAP_SUB$month),'sum')
 
 
-SCAP_SUB_SUBMISSION <- data.frame(na.omit(rep(SCAP_SUB$month, SCAP_SUB$sub)))
-SCAP_SUB_COUNT<- count(SCAP_SUB_SUBMISSION)
-SCAP_SUB_COUNT$prop <- SCAP_SUB_COUNT$freq/sum(SCAP_SUB_COUNT$freq)
-colnames(SCAP_SUB_COUNT) <- c("month",'freq','prop')
+SCAP_SUB_AGG $prop <- SCAP_SUB_AGG$x/sum(SCAP_SUB_AGG$x)
+colnames(SCAP_SUB_AGG) <- c("Month",'Inds','Prop')
 ###SCAPULARIS PROPORTION
-SCAPULARIS_SUB_COUNT_G<-ggplot(SCAP_SUB_COUNT, aes(x= as.factor(month),y = prop,
-               fill=as.factor(month)))+geom_bar(stat='identity',color='black')+
+SCAPULARIS_SUB_COUNT_G<-ggplot(SCAP_SUB_AGG, aes(x= as.factor(Month),y = Prop,
+               fill=as.factor(Month)))+geom_bar(stat='identity',color='black')+
   
   scale_fill_viridis(discrete=TRUE,guide=FALSE)+theme_classic()+
   ylab("Proportions")+
   scale_x_discrete(name='Month',
                    labels= c("Jan","Feb","Mar","Apr","May",
                              "Jun","Jul","Aug","Sept","Oct","Nov",
-                             "Dec"))+ggtitle("Ixodes scapularis seasonality")
+                             "Dec"))+ggtitle("Ixodes scapularis ")+ylim(0,0.5)
 
-#################################################
-#################################################
-#########BY DECADES ###############################
-#########################################
-
-SCAPULARIS_SEASON_DEC <- split(SCAPULARIS_SEASON, SCAPULARIS_SEASON$Decade)
-
-DEC_SEASON_SCAP<- NULL
-for (i in seq(1, length(SCAPULARIS_SEASON_DEC))){
-  TMP <- SCAPULARIS_SEASON_DEC[[i]]
-  TMP_REP <-na.omit(rep(  TMP $month,   TMP $sub))
-  TMP_REP_COUNT<- data.frame(FREQ= count( TMP_REP))
-  TMP_REP_COUNT$Prop <- TMP_REP_COUNT$FREQ.freq/(sum(TMP_REP_COUNT$FREQ.freq))
-  TMP_REP_COUNT$Decade <- unique(TMP$Decade)
-  DEC_SEASON_SCAP[[i]]<- TMP_REP_COUNT
-}
-
-DEC_SEASON_SCAP_FINAL <- do.call(rbind, DEC_SEASON_SCAP)
-
-ggplot(subset(DEC_SEASON_SCAP_FINAL,DEC_SEASON_SCAP_FINAL$Decade
-              != '1910-1920'&
-                DEC_SEASON_SCAP_FINAL$Decade!= '1920-1930'&
-              DEC_SEASON_SCAP_FINAL$Decade
-              != '1930-1940'& 
-                DEC_SEASON_SCAP_FINAL$Decade
-              != '1940-1950'), 
-       aes(x=FREQ.x, y= Prop))+
-  geom_bar(stat='identity',aes(fill=FREQ.x),color='black')+
-   facet_grid(Decade~.,switch='both')+
-  scale_fill_viridis(guide=FALSE)+
-  scale_x_discrete(name='Month',
-                   limits= c("Jan","Feb","Mar","Apr","May",
-                                          "Jun","Jul","Aug","Sept","Oct","Nov",
-                                          "Dec"))+theme_bw()+
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
-
+################################################################################
 #####################SEASONALITY OF LIFE_STAGES ################################
-
-LIFE_STAG_SCAP <- SCAPULARIS_SEASON[, c(13,14,15,16,17,18,19)]
+#################################################################################
+LIFE_STAG_SCAP <- SCAPULARIS_SEASON[, c(13,14,15,16,17,18,19,20)]
 LIFE_STAG_SCAP$ADULT <- LIFE_STAG_SCAP$Adult_FEM + LIFE_STAG_SCAP$Adult_Male
 
 
@@ -193,24 +158,24 @@ SCAP_GGPLOT <-ggplot(SCAP_SEASON,aes(x= x, y= prop, fill=x))+scale_fill_viridis(
 ###########################################
 COOKEI_SEASON <- subset(PA_SUB, PA_SUB$Species == 'cookei')
 
-COOKEI_SUB<-cbind.data.frame(sub = COOKEI_SEASON$submission,
+COOKEI_SUB<-cbind.data.frame(Ind= COOKEI_SEASON$Individuals,
                              month= COOKEI_SEASON$month)
 
+COOK_SUB_AGG <- aggregate(COOKEI_SUB$Ind, list(COOKEI_SUB$month),'sum')
 
-COOKEI_SUB_SUBMISSION <- data.frame(na.omit(rep(COOKEI_SUB$month, COOKEI_SUB$sub)))
-COOKEI_SUB_COUNT<-data.frame(count(COOKEI_SUB_SUBMISSION))
-COOKEI_SUB_COUNT$prop <- COOKEI_SUB_COUNT$freq/sum(COOKEI_SUB_COUNT$freq)
-colnames(COOKEI_SUB_COUNT) <- c("month",'freq','prop')
+
+COOK_SUB_AGG $prop <- COOK_SUB_AGG $x/sum(COOK_SUB_AGG $x)
+colnames(COOK_SUB_AGG ) <- c("Month",'Inds','Prop')
 ###SCAPULARIS PROPORTION
-COOKEI_SUB_COUNT_G<- ggplot(COOKEI_SUB_COUNT, aes(x= as.factor(month),y = prop,
-                           fill=as.factor(month)))+geom_bar(stat='identity',color='black')+
+COOKEI_SUB_COUNT_G<- ggplot(COOK_SUB_AGG, aes(x= as.factor(Month),y = Prop,
+                           fill=as.factor(Month)))+geom_bar(stat='identity',color='black')+
   
   scale_fill_viridis(discrete=TRUE,guide=FALSE)+theme_classic()+
   ylab("Proportions")+
   scale_x_discrete(name='Month',
                    labels= c("Jan","Feb","Mar","Apr","May",
                              "Jun","Jul","Aug","Sept","Oct","Nov",
-                             "Dec"))+ggtitle("Ixodes cookei seasonality")
+                             "Dec"))+ggtitle("Ixodes cookei")+ylim(0,0.5)
 
 #################################################
 #################################################
@@ -321,24 +286,25 @@ COOK_GGPLOT <- ggplot(COOK_SEASON,aes(x= x, y= prop, fill=x))+scale_fill_viridis
 ###########################################
 VARIABILIS_SEASON <- subset(PA_SUB, PA_SUB$Species == 'variabilis')
 
-VARI_SUB<-cbind.data.frame(sub = VARIABILIS_SEASON $submission,
+VARI_SUB<-cbind.data.frame(Ind = VARIABILIS_SEASON $Individuals,
                              month= VARIABILIS_SEASON$month)
 
-
-VARI_SUB_SUBMISSION <- data.frame(na.omit(rep(VARI_SUB$month, VARI_SUB$sub)))
-VARI_SUB_COUNT<-data.frame(table(VARI_SUB_SUBMISSION))
-VARI_SUB_COUNT$prop <- VARI_SUB_COUNT$Freq/sum(VARI_SUB_COUNT$Freq)
-colnames(VARI_SUB_COUNT) <- c("month",'Freq','prop')
+FULL_DATE <- data.frame(Group.1 =seq(1,12))
+VARI_SUB_AGG <- aggregate(VARI_SUB$Ind, list(VARI_SUB$month),'sum')
+VARI_SUB_AGG <- left_join(FULL_DATE, VARI_SUB_AGG)
+VARI_SUB_AGG [is.na(VARI_SUB_AGG)==TRUE]<-0
+VARI_SUB_AGG$prop <- VARI_SUB_AGG$x/sum(VARI_SUB_AGG$x)
+colnames(VARI_SUB_AGG) <- c("Month",'Inds','Prop')
 ###SCAPULARIS PROPORTION
-VARI_SUB_COUNT_G<- ggplot(VARI_SUB_COUNT, aes(x= as.factor(month),y = prop,
-                                  fill=as.factor(month)))+geom_bar(stat='identity',color='black')+
+VARI_SUB_COUNT_G<- ggplot(VARI_SUB_AGG, aes(x= as.factor(Month),y = Prop,
+                                  fill=as.factor(Month)))+geom_bar(stat='identity',color='black')+
   
   scale_fill_viridis(discrete=TRUE,guide=FALSE)+theme_classic()+
   ylab("Proportions")+
   scale_x_discrete(name='Month',
                    labels= c("Jan","Feb","Mar","Apr","May",
                              "Jun","Jul","Aug","Sept","Oct","Nov",
-                             "Dec"))+ggtitle("Dermacentor variabilis")
+                             "Dec"))+ggtitle("Dermacentor variabilis")+ylim(0,0.5)
 
 #################################################
 #################################################
@@ -420,26 +386,27 @@ VARI_GGPLOT <- ggplot(VARI_SEASON,aes(x= x, y= prop, fill=x))+scale_fill_viridis
 ###########################################
 AMERICANUM_SEASON <- subset(PA_SUB, PA_SUB$Species == 'americanum')
 
-AMERI_SUB<-cbind.data.frame(sub = AMERICANUM_SEASON $submission,
+AMERI_SUB<-cbind.data.frame(Ind = AMERICANUM_SEASON $Individuals,
                            month=AMERICANUM_SEASON$month)
+AMERI_SUB_AGG <- aggregate(AMERI_SUB$Ind, by=list(AMERI_SUB$month),'sum')
+AMERI_SUB_AGG <- left_join(FULL_DATE, AMERI_SUB_AGG)
+AMERI_SUB_AGG [is.na(AMERI_SUB_AGG)==TRUE]<-0
 
 
-AMERI_SUB_SUBMISSION <- data.frame(na.omit(rep(AMERI_SUB$month, AMERI_SUB$sub)))
-AMERI_SUB_COUNT<-data.frame(table(AMERI_SUB_SUBMISSION))
-AMERI_SUB_COUNT$prop <- AMERI_SUB_COUNT$Freq/sum(AMERI_SUB_COUNT$Freq)
-colnames(AMERI_SUB_COUNT) <- c("month",'Freq','prop')
+AMERI_SUB_AGG$prop <- AMERI_SUB_AGG$x/sum(AMERI_SUB_AGG$x)
+colnames(AMERI_SUB_AGG) <- c("Month",'Freq','Prop')
 
 
 ###SCAPULARIS PROPORTION
-AMERI_SUB_COUNT_G<- ggplot(AMERI_SUB_COUNT, aes(x= as.factor(month),y = prop,
-                                              fill=as.factor(month)))+geom_bar(stat='identity',color='black')+
+AMERI_SUB_COUNT_G<- ggplot(AMERI_SUB_AGG, aes(x= as.factor(Month),y = Prop,
+                                              fill=as.factor(Month)))+geom_bar(stat='identity',color='black')+
   
   scale_fill_viridis(discrete=TRUE,guide=FALSE)+theme_classic()+
   ylab("Proportions")+
   scale_x_discrete(name='Month',
                    labels= c("Jan","Feb","Mar","Apr","May",
                              "Jun","Jul","Aug","Sept","Oct","Nov",
-                             "Dec"))+ggtitle("Amblyomma americanum")
+                             "Dec"))+ggtitle("Amblyomma americanum")+ylim(0,0.5)
 
 #################################################
 #################################################
@@ -516,32 +483,39 @@ AMERICANUM_GGPLOT <-ggplot(AMERI_SEASON,aes(x= x, y= prop, fill=x))+scale_fill_v
   xlab('Month')+ylab('')+ggtitle("Amblyomma americanum")+ylim(0,1)
 
 ###################################
-####RHICEPHALUS #####################
+####RHICEPHALUS SANGUINEUS #####################
 #####################################
 
 
 SANG_SEASON <- subset(PA_SUB, PA_SUB$Species == 'sanguineus')
 
-AMERI_SUB<-cbind.data.frame(sub = AMERICANUM_SEASON $submission,
-                            month=AMERICANUM_SEASON$month)
+SANG_SUB<-cbind.data.frame(Ind = SANG_SEASON $Individuals,
+                            month=
+                             SANG_SEASON$month)
+
+SANG_SUB_AGG <- aggregate(SANG_SUB$Ind, by=list(SANG_SUB$month),'sum')
+SANG_SUB_AGG <- left_join(FULL_DATE, SANG_SUB_AGG)
+SANG_SUB_AGG [is.na(SANG_SUB_AGG)==TRUE]<-0
+SANG_SUB_AGG$prop <- SANG_SUB_AGG$x/sum(SANG_SUB_AGG$x)
+colnames(SANG_SUB_AGG) <- c("Month",'Freq','Prop')
 
 
-AMERI_SUB_SUBMISSION <- data.frame(na.omit(rep(AMERI_SUB$month, AMERI_SUB$sub)))
-AMERI_SUB_COUNT<-data.frame(table(AMERI_SUB_SUBMISSION))
-AMERI_SUB_COUNT$prop <- AMERI_SUB_COUNT$Freq/sum(AMERI_SUB_COUNT$Freq)
-colnames(AMERI_SUB_COUNT) <- c("month",'Freq','prop')
 
-
-###SCAPULARIS PROPORTION
-AMERI_SUB_COUNT_G<- ggplot(AMERI_SUB_COUNT, aes(x= as.factor(month),y = prop,
-                                                fill=as.factor(month)))+geom_bar(stat='identity',color='black')+
+SANG_SUB_COUNT_G<- ggplot(SANG_SUB_AGG, aes(x= as.factor(Month),y = Prop,
+                                                fill=as.factor(Month)))+
+                                  geom_bar(stat='identity',color='black')+
   
   scale_fill_viridis(discrete=TRUE,guide=FALSE)+theme_classic()+
   ylab("Proportions")+
   scale_x_discrete(name='Month',
                    labels= c("Jan","Feb","Mar","Apr","May",
                              "Jun","Jul","Aug","Sept","Oct","Nov",
-                             "Dec"))+ggtitle("Amblyomma americanum")
+                             "Dec"))+ggtitle("Rhipicephalus sanguineus")+ylim(0,0.5)
+
+
+grid.arrange(SCAPULARIS_SUB_COUNT_G,COOKEI_SUB_COUNT_G, VARI_SUB_COUNT_G,
+             AMERI_SUB_COUNT_G, SANG_SUB_COUNT_G)
+
 
 #################################################
 #################################################
@@ -550,70 +524,70 @@ AMERI_SUB_COUNT_G<- ggplot(AMERI_SUB_COUNT, aes(x= as.factor(month),y = prop,
 
 #####################SEASONALITY OF LIFE_STAGES ################################
 
-LIFE_STAG_AMERI <- AMERICANUM_SEASON [, c(13,14,15,16,17,18,19)]
-LIFE_STAG_AMERI$ADULT <- LIFE_STAG_AMERI$Adult_FEM + LIFE_STAG_AMERI$Adult_Male
+LIFE_STAG_SANG <- SANG_SEASON [, c(13,14,15,16,17,18,19)]
+LIFE_STAG_SANG$ADULT <- LIFE_STAG_SANG$Adult_FEM + LIFE_STAG_SANG$Adult_Male
 
 
 ###NYMPHS
-NYMPH_AMERI_DAT<- cbind.data.frame(month = LIFE_STAG_AMERI$month,
-                                   sub= LIFE_STAG_AMERI$Nymph)
+NYMPH_SANG_DAT<- cbind.data.frame(month = LIFE_STAG_SANG$month,
+                                   sub= LIFE_STAG_SANG$Nymph)
 
-NYMPH_AMERI_DAT<-na.omit(NYMPH_AMERI_DAT[NYMPH_AMERI_DAT$sub!=0,])
-NYMPH_AMERI_REP <- rep(NYMPH_AMERI_DAT$month, NYMPH_AMERI_DAT$sub)
-NYMPH_AMERI_COUNT <- data.frame(table(NYMPH_AMERI_REP))
-colnames(NYMPH_AMERI_COUNT)[1]<-'x'
-NYMPH_AMERI_COUNT$prop <- NYMPH_AMERI_COUNT$Freq/sum(NYMPH_AMERI_COUNT$Freq)
-NYMPH_AMERI_COUNT$id <- 'Nymph'
-NYMPH_AMERI_COUNT$x <- as.factor(NYMPH_AMERI_COUNT$x)
-NYMPH_AMERI_COUNT_FULL<-left_join(VEC,NYMPH_AMERI_COUNT,by='x')
-NYMPH_AMERI_COUNT_FULL$Freq[is.na(NYMPH_AMERI_COUNT_FULL$Freq)==TRUE]<- 0
-NYMPH_AMERI_COUNT_FULL$ prop[is.na(NYMPH_AMERI_COUNT_FULL$ prop)==TRUE]<- 0
-NYMPH_AMERI_COUNT_FULL$ id[is.na(NYMPH_AMERI_COUNT_FULL$ id)==TRUE]<- 'Nymph'
+NYMPH_SANG_DAT<-na.omit(NYMPH_SANG_DAT[NYMPH_SANG_DAT$sub!=0,])
+NYMPH_SANG_REP <- rep(NYMPH_SANG_DAT$month, NYMPH_SANG_DAT$sub)
+NYMPH_SANG_COUNT <- data.frame(table(NYMPH_SANG_REP))
+colnames(NYMPH_SANG_COUNT)[1]<-'x'
+NYMPH_SANG_COUNT$prop <- NYMPH_SANG_COUNT$Freq/sum(NYMPH_SANG_COUNT$Freq)
+NYMPH_SANG_COUNT$id <- 'Nymph'
+NYMPH_SANG_COUNT$x <- as.factor(NYMPH_SANG_COUNT$x)
+NYMPH_SANG_COUNT_FULL<-left_join(VEC,NYMPH_SANG_COUNT,by='x')
+NYMPH_SANG_COUNT_FULL$Freq[is.na(NYMPH_SANG_COUNT_FULL$Freq)==TRUE]<- 0
+NYMPH_SANG_COUNT_FULL$ prop[is.na(NYMPH_SANG_COUNT_FULL$ prop)==TRUE]<- 0
+NYMPH_SANG_COUNT_FULL$ id[is.na(NYMPH_SANG_COUNT_FULL$ id)==TRUE]<- 'Nymph'
 
 ###LARVAE
-LARV_AMERI_DAT <- cbind.data.frame(month = LIFE_STAG_AMERI$month, sub = LIFE_STAG_AMERI$Larva)
-LARV_AMERI_DAT<-na.omit(LARV_AMERI_DAT[LARV_AMERI_DAT$sub!=0,])
-LARV_AMERI_REP <- rep(LARV_AMERI_DAT$month, LARV_AMERI_DAT$sub)
-LARV_AMERI_COUNT <- data.frame(table(LARV_AMERI_REP))
-colnames(LARV_AMERI_COUNT)[1]<- 'x'
-LARV_AMERI_COUNT$prop <- LARV_AMERI_COUNT$Freq/sum(LARV_AMERI_COUNT$Freq)
-LARV_AMERI_COUNT$id <- 'Larvae'
-LARV_AMERI_COUNT_FULL<-left_join(VEC,LARV_AMERI_COUNT,by='x')
-LARV_AMERI_COUNT_FULL$Freq[is.na(LARV_AMERI_COUNT_FULL$Freq)==TRUE]<- 0
-LARV_AMERI_COUNT_FULL$ prop[is.na(LARV_AMERI_COUNT_FULL$ prop)==TRUE]<- 0
-LARV_AMERI_COUNT_FULL$ id[is.na(LARV_AMERI_COUNT_FULL$ id)==TRUE]<- 'Larvae'
+LARV_SANG_DAT <- cbind.data.frame(month = LIFE_STAG_SANG$month, sub = LIFE_STAG_SANG$Larva)
+LARV_SANG_DAT<-na.omit(LARV_SANG_DAT[LARV_SANG_DAT$sub!=0,])
+LARV_SANG_REP <- rep(LARV_SANG_DAT$month, LARV_SANG_DAT$sub)
+LARV_SANG_COUNT <- data.frame(table(LARV_SANG_REP))
+colnames(LARV_SANG_COUNT)[1]<- 'x'
+LARV_SANG_COUNT$prop <- LARV_SANG_COUNT$Freq/sum(LARV_SANG_COUNT$Freq)
+LARV_SANG_COUNT$id <- 'Larvae'
+LARV_SANG_COUNT_FULL<-left_join(VEC,LARV_SANG_COUNT,by='x')
+LARV_SANG_COUNT_FULL$Freq[is.na(LARV_SANG_COUNT_FULL$Freq)==TRUE]<- 0
+LARV_SANG_COUNT_FULL$ prop[is.na(LARV_SANG_COUNT_FULL$ prop)==TRUE]<- 0
+LARV_SANG_COUNT_FULL$ id[is.na(LARV_SANG_COUNT_FULL$ id)==TRUE]<- 'Larvae'
 
 ###LARVAE
 ###ADULT
-ADULT_AMERI_DAT <- cbind.data.frame(month = LIFE_STAG_AMERI$month, 
-                                    sub = LIFE_STAG_AMERI$ADULT)
-ADULT_AMERI_DAT<-na.omit(ADULT_AMERI_DAT[ADULT_AMERI_DAT$sub!=0,])
-ADULT_AMERI_REP <- rep(ADULT_AMERI_DAT$month, ADULT_AMERI_DAT$sub)
-ADULT_AMERI_COUNT <-data.frame(table(ADULT_AMERI_REP))
-colnames(ADULT_AMERI_COUNT)[1]<-'x'
-ADULT_AMERI_COUNT$prop <- ADULT_AMERI_COUNT$Freq/sum(ADULT_AMERI_COUNT$Freq)
-ADULT_AMERI_COUNT$id <- 'Adult'
-ADULT_AMERI_COUNT<- data.frame(complete(ADULT_AMERI_COUNT, 
+ADULT_SANG_DAT <- cbind.data.frame(month = LIFE_STAG_SANG$month, 
+                                    sub = LIFE_STAG_SANG$ADULT)
+ADULT_SANG_DAT<-na.omit(ADULT_SANG_DAT[ADULT_SANG_DAT$sub!=0,])
+ADULT_SANG_REP <- rep(ADULT_SANG_DAT$month, ADULT_SANG_DAT$sub)
+ADULT_SANG_COUNT <-data.frame(table(ADULT_SANG_REP))
+colnames(ADULT_SANG_COUNT)[1]<-'x'
+ADULT_SANG_COUNT$prop <- ADULT_SANG_COUNT$Freq/sum(ADULT_SANG_COUNT$Freq)
+ADULT_SANG_COUNT$id <- 'Adult'
+ADULT_SANG_COUNT<- data.frame(complete(ADULT_SANG_COUNT, 
                                         x, fill = list(freq=0, prop = 0,id='Adult')))
-ADULT_AMERI_COUNT$x <- as.factor(ADULT_AMERI_COUNT$x)
-ADULT_AMERI_COUNT_FULL<-left_join(VEC,ADULT_AMERI_COUNT,by='x')
-ADULT_AMERI_COUNT_FULL$Freq[is.na(ADULT_AMERI_COUNT_FULL$Freq)==TRUE]<- 0
-ADULT_AMERI_COUNT_FULL$ prop[is.na(ADULT_AMERI_COUNT_FULL$ prop)==TRUE]<- 0
-ADULT_AMERI_COUNT_FULL$ id[is.na(ADULT_AMERI_COUNT_FULL$ id)==TRUE]<- 'Adult'
+ADULT_SANG_COUNT$x <- as.factor(ADULT_SANG_COUNT$x)
+ADULT_SANG_COUNT_FULL<-left_join(VEC,ADULT_SANG_COUNT,by='x')
+ADULT_SANG_COUNT_FULL$Freq[is.na(ADULT_SANG_COUNT_FULL$Freq)==TRUE]<- 0
+ADULT_SANG_COUNT_FULL$ prop[is.na(ADULT_SANG_COUNT_FULL$ prop)==TRUE]<- 0
+ADULT_SANG_COUNT_FULL$ id[is.na(ADULT_SANG_COUNT_FULL$ id)==TRUE]<- 'Adult'
 
 
-AMERI_SEASON <- rbind.data.frame(NYMPH_AMERI_COUNT_FULL, LARV_AMERI_COUNT_FULL,
-                                 ADULT_AMERI_COUNT_FULL)
-AMERI_SEASON$x <- as.numeric(AMERI_SEASON$x)
-AMERI_SEASON$id= factor(AMERI_SEASON$id, levels=c('Nymph', 'Larvae','Adult'))
+SANG_SEASON <- rbind.data.frame(NYMPH_SANG_COUNT_FULL, LARV_SANG_COUNT_FULL,
+                                 ADULT_SANG_COUNT_FULL)
+SANG_SEASON$x <- as.numeric(SANG_SEASON$x)
+SANG_SEASON$id= factor(SANG_SEASON$id, levels=c('Nymph', 'Larvae','Adult'))
 
 
-AMERICANUM_GGPLOT <-ggplot(AMERI_SEASON,aes(x= x, y= prop, fill=x))+scale_fill_viridis(guide=FALSE)+
+SANGCANUM_GGPLOT <-ggplot(SANG_SEASON,aes(x= x, y= prop, fill=x))+scale_fill_viridis(guide=FALSE)+
   geom_bar(color='black',
            stat= 'identity')+ scale_x_discrete(
              limits= c("Jan","Feb","Mar","Apr","May",
                        "Jun","Jul","Aug","Sept","Oct","Nov",
                        "Dec"))+theme_bw()+facet_grid(id~.,switch = 'both')+
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())+
-  xlab('Month')+ylab('')+ggtitle("Amblyomma americanum")+ylim(0,1)
+  xlab('Month')+ylab('')+ggtitle("Amblyomma SANGcanum")+ylim(0,1)
 
