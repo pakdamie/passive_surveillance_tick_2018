@@ -1,0 +1,226 @@
+3/27/95
+
+PENNSYLVANIA
+Population of Counties by Decennial Census: 1900 to 1990
+Compiled and edited by Richard L. Forstall
+                       Population Division
+                       US Bureau of the Census
+                       Washington, DC  20233
+
+Please see file, 1900-90.doc for explanatory notes and documentation.
+
+ FIPS      1990      1980      1970      1960
+00000 248709873 226545805 203211926 179323175 United States
+
+42000  11881643  11863895  11793909  11319366 Pennsylvania
+42001     78274     68292     56937     51906 Adams County
+42003   1336449   1450085   1605016   1628587 Allegheny County
+42005     73478     77768     75590     79524 Armstrong County
+42007    186093    204441    208418    206948 Beaver County
+42009     47919     46784     42353     42451 Bedford County
+42011    336523    312509    296382    275414 Berks County
+42013    130542    136621    135356    137270 Blair County
+42015     60967     62919     57962     54925 Bradford County
+42017    541174    479211    415056    308567 Bucks County
+42019    152013    147912    127941    114639 Butler County
+42021    163029    183263    186785    203283 Cambria County
+42023      5913      6674      7096      7586 Cameron County
+42025     56846     53285     50573     52889 Carbon County
+42027    123786    112760     99267     78580 Centre County
+42029    376396    316660    278311    210608 Chester County
+42031     41699     43362     38414     37408 Clarion County
+42033     78097     83578     74619     81534 Clearfield County
+42035     37182     38971     37721     37619 Clinton County
+42037     63202     61967     55114     53489 Columbia County
+42039     86169     88869     81342     77956 Crawford County
+42041    195257    178541    158177    124816 Cumberland County
+42043    237813    232317    223834    220255 Dauphin County
+42045    547651    555007    600035    553154 Delaware County
+42047     34878     38338     37770     37328 Elk County
+42049    275572    279780    263654    250682 Erie County
+42051    145351    159417    154667    169340 Fayette County
+42053      4802      5072      4926      4485 Forest County
+42055    121082    113629    100833     88172 Franklin County
+42057     13837     12842     10776     10597 Fulton County
+42059     39550     40476     36090     39424 Greene County
+42061     44164     42253     39108     39457 Huntingdon County
+42063     89994     92281     79451     75366 Indiana County
+42065     46083     48303     43695     46792 Jefferson County
+42067     20625     19188     16712     15874 Juniata County
+42069    219039    227908    234107    234531 Lackawanna County
+42071    422822    362346    319693    278359 Lancaster County
+42073     96246    107150    107374    112965 Lawrence County
+42075    113744    108582     99665     90853 Lebanon County
+42077    291130    272349    255304    227536 Lehigh County
+42079    328149    343079    342301    346972 Luzerne County
+42081    118710    118416    113296    109367 Lycoming County
+42083     47131     50635     51915     54517 Mc Kean County
+42085    121003    128299    127175    127519 Mercer County
+42087     46197     46908     45268     44348 Mifflin County
+42089     95709     69409     45422     39567 Monroe County
+42091    678111    643621    623799    516682 Montgomery County
+42093     17735     16675     16508     16730 Montour County
+42095    247105    225418    214368    201412 Northampton County
+42097     96771    100381     99190    104138 Northumberland County
+42099     41172     35718     28615     26582 Perry County
+42101   1585577   1688210   1948609   2002512 Philadelphia County
+42103     27966     18271     11818      9158 Pike County
+42105     16717     17726     16395     16483 Potter County
+42107    152585    160630    160089    173027 Schuylkill County
+42109     36680     33584     29269     25922 Snyder County
+42111     78218     81243     76037     77450 Somerset County
+42113      6104      6349      5961      6251 Sullivan County
+42115     40380     37876     34344     33137 Susquehanna County
+42117     41126     40973     39691     36614 Tioga County
+42119     36176     32870     28603     25646 Union County
+42121     59381     64444     62353     65295 Venango County
+42123     45050     47449     47682     45582 Warren County
+42125    204584    217074    210876    217271 Washington County
+42127     39944     35237     29581     28237 Wayne County
+42129    370321    392294    376935    352629 Westmoreland County
+42131     28076     26433     19082     16813 Wyoming County
+42133    339574    312963    272603    238336 York County
+
+ FIPS      1950      1940      1930      1920
+00000 151325798 132164569 123202624 106021537 United States
+
+42000  10498012   9900180   9631350   8720017 Pennsylvania
+42001     44197     39435     37128     34583 Adams County
+42003   1515237   1411539   1374410   1185808 Allegheny County
+42005     80842     81087     79298     75568 Armstrong County
+42007    175192    156754    149062    111621 Beaver County
+42009     40775     40809     37309     38277 Bedford County
+42011    255740    241884    231717    200854 Berks County
+42013    139514    140358    139840    128334 Blair County
+42015     51722     50615     49039     53166 Bradford County
+42017    144620    107715     96727     82476 Bucks County
+42019     97320     87590     80480     77270 Butler County
+42021    209541    213459    203146    197839 Cambria County
+42023      7023      6852      5307      6297 Cameron County
+42025     57558     61735     63380     62565 Carbon County
+42027     65922     52608     46294     44304 Centre County
+42029    159141    135626    126629    115120 Chester County
+42031     38344     38410     34531     36170 Clarion County
+42033     85957     92094     86727    103236 Clearfield County
+42035     36532     34557     32319     33555 Clinton County
+42037     53460     51413     48803     48349 Columbia County
+42039     78948     71644     62980     60667 Crawford County
+42041     94457     74806     68236     58578 Cumberland County
+42043    197784    177410    165231    153116 Dauphin County
+42045    414234    310756    280264    173084 Delaware County
+42047     34503     34443     33431     34981 Elk County
+42049    219388    180889    175277    153536 Erie County
+42051    189899    200999    198542    188104 Fayette County
+42053      4944      5791      5180      7477 Forest County
+42055     75927     69378     65010     62275 Franklin County
+42057     10387     10673      9231      9617 Fulton County
+42059     45394     44671     41767     30804 Greene County
+42061     40872     41836     39021     39848 Huntingdon County
+42063     77106     79854     75395     80910 Indiana County
+42065     49147     54090     52114     62104 Jefferson County
+42067     15243     15373     14325     14464 Juniata County
+42069    257396    301243    310397    286311 Lackawanna County
+42071    234717    212504    196882    173797 Lancaster County
+42073    105120     96877     97258     85545 Lawrence County
+42075     81683     72641     67103     63152 Lebanon County
+42077    198207    177533    172893    148101 Lehigh County
+42079    392241    441518    445109    390991 Luzerne County
+42081    101249     93633     93421     83100 Lycoming County
+42083     56607     56673     55167     48934 Mc Kean County
+42085    111954    101039     99246     93788 Mercer County
+42087     43691     42993     40335     31439 Mifflin County
+42089     33773     29802     28286     24295 Monroe County
+42091    353068    289247    265804    199310 Montgomery County
+42093     16001     15466     14517     14080 Montour County
+42095    185243    168959    169304    153506 Northampton County
+42097    117115    126887    128504    122079 Northumberland County
+42099     24782     23213     21744     22875 Perry County
+42101   2071605   1931334   1950961   1823779 Philadelphia County
+42103      8425      7452      7483      6818 Pike County
+42105     16810     18201     17489     21089 Potter County
+42107    200577    228331    235505    217754 Schuylkill County
+42109     22912     20208     18836     17129 Snyder County
+42111     81813     84957     80764     82112 Somerset County
+42113      6745      7504      7499      9520 Sullivan County
+42115     31970     33893     33806     34763 Susquehanna County
+42117     35474     35004     31871     37118 Tioga County
+42119     23150     20247     17468     15850 Union County
+42121     65328     63958     63226     59184 Venango County
+42123     42698     42789     41453     40024 Warren County
+42125    209628    210852    204802    188992 Washington County
+42127     28478     29934     28420     27435 Wayne County
+42129    313179    303411    294995    273568 Westmoreland County
+42131     16766     16702     15517     14101 Wyoming County
+42133    202737    178022    167135    144521 York County
+
+ FIPS      1910      1900
+00000  92228496  76212168                     United States
+
+42000   7665111   6302115                     Pennsylvania
+42001     34319     34496                     Adams County
+42003   1018463    775058                     Allegheny County
+42005     67880     52551                     Armstrong County
+42007     78353     56432                     Beaver County
+42009     38879     39468                     Bedford County
+42011    183222    159615                     Berks County
+42013    108858     85099                     Blair County
+42015     54526     59403                     Bradford County
+42017     76530     71190                     Bucks County
+42019     72689     56962                     Butler County
+42021    166131    104837                     Cambria County
+42023      7644      7048                     Cameron County
+42025     52846     44510                     Carbon County
+42027     43424     42894                     Centre County
+42029    109213     95695                     Chester County
+42031     36638     34283                     Clarion County
+42033     93768     80614                     Clearfield County
+42035     31545     29197                     Clinton County
+42037     48467     39896                     Columbia County
+42039     61565     63643                     Crawford County
+42041     54479     50344                     Cumberland County
+42043    136152    114443                     Dauphin County
+42045    117906     94762                     Delaware County
+42047     35871     32903                     Elk County
+42049    115517     98473                     Erie County
+42051    167449    110412                     Fayette County
+42053      9435     11039                     Forest County
+42055     59775     54902                     Franklin County
+42057      9703      9924                     Fulton County
+42059     28882     28281                     Greene County
+42061     38304     34650                     Huntingdon County
+42063     66210     42556                     Indiana County
+42065     63090     59113                     Jefferson County
+42067     15013     16054                     Juniata County
+42069    259570    193831                     Lackawanna County
+42071    167029    159241                     Lancaster County
+42073     70032     57042                     Lawrence County
+42075     59565     53827                     Lebanon County
+42077    118832     93893                     Lehigh County
+42079    343186    257121                     Luzerne County
+42081     80813     75663                     Lycoming County
+42083     47868     51343                     Mc Kean County
+42085     77699     57387                     Mercer County
+42087     27785     23160                     Mifflin County
+42089     22941     21161                     Monroe County
+42091    169590    138995                     Montgomery County
+42093     14868     15526                     Montour County
+42095    127667     99687                     Northampton County
+42097    111420     90911                     Northumberland County
+42099     24136     26263                     Perry County
+42101   1549008   1293697                     Philadelphia County
+42103      8033      8766                     Pike County
+42105     29729     30621                     Potter County
+42107    207894    172927                     Schuylkill County
+42109     16800     17304                     Snyder County
+42111     67717     49461                     Somerset County
+42113     11293     12134                     Sullivan County
+42115     37746     40043                     Susquehanna County
+42117     42829     49086                     Tioga County
+42119     16249     17592                     Union County
+42121     56359     49648                     Venango County
+42123     39573     38946                     Warren County
+42125    143680     92181                     Washington County
+42127     29236     30171                     Wayne County
+42129    231304    160175                     Westmoreland County
+42131     15509     17152                     Wyoming County
+42133    136405    116413                     York County

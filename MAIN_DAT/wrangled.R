@@ -126,14 +126,12 @@ PA_SUB$Date <- as.character(PA_SUB$Date)
 PA_SUB$Date <- as.Date(PA_SUB$Date,format = '%m/%d/%Y' )
 
 PA_SUB$month <- as.numeric(format(PA_SUB$Date, '%m'))
+
+PA_SUB$submission <-1
+
 ##########################################################################
 ###END- NOW YOU CAN START 
 ##########################################################################
 ##########################################################################
-PA_SUB$submission <-1
 
-
-###HOW MANY TICK SUBMISSIONS WERE THERE IN 1990"
-
-aggregate(PA_SUB$Individuals,list(PA_SUB$Year),'sum' )
 
