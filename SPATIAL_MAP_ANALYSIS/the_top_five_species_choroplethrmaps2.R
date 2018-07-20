@@ -18,7 +18,7 @@ counties <- map_data("county")
 ###Only looking at Pennsylvania 
 pa_county <- subset(counties, region == 'pennsylvania')
 colnames(pa_county)[6] <- 'County'
-pa_count$County <- as.character(pa_county$County)
+pa_county$County <- as.character(pa_county$County)
 ##################
 ###THE PERIODS ###
 ##################
@@ -148,5 +148,21 @@ all_IND<- ggplot(ALL_IND,aes(x=long, y= lat, group=group, fill = log(Ind+1)))+
   scale_fill_viridis(option='magma')+
   facet_grid(id~.)+coord_map()+theme_void()
 
+######SPECIES############################
 
 
+Species_Decades_Incidencer <- function(x,d){
+    Dat = x              ###Take the data (x) and put it in a new var name Dat
+    Dat = subset(Dat, Dat$Decade == DECADES[d]) ###Loop around to look at data at a specific decades
+    Dat2 =    Dat[,c("County",'Individuals')] ###Use Dat2 now and rename the columns
+    Dat2 = subset(Dat2, Dat2$County != 'no record'& Dat2$County != '') ###Make sure that 'no-record' and '' empty is gone
+    Dat2 = (aggregate(Dat2$Individuals,by=list(Dat2$County),'sum'))
+    colnames(Dat2) <- c('County','Ind')
+    pop_dat <- cbind.data.frame(County = PA_POP_60_10$County,Pop= PA_POP_60_10[,Year[3]])
+    ###Join the population data and the tick data
+    pop_dat_2 <- left_join(pop_dat, Dat2, by='County')
+    pop_dat_2$incidence = (pop_dat_2$Ind/pop_dat_2$Pop)*100000
+    return(  pop_dat_2[order(pop_dat_2$incidence),])} #Sum up by counties x=Scap
+
+
+Species_Decades_Incidencer(Cook,2)

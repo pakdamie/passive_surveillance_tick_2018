@@ -589,5 +589,5 @@ SANGCANUM_GGPLOT <-ggplot(SANG_SEASON,aes(x= x, y= prop, fill=x))+scale_fill_vir
                        "Jun","Jul","Aug","Sept","Oct","Nov",
                        "Dec"))+theme_bw()+facet_grid(id~.,switch = 'both')+
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())+
-  xlab('Month')+ylab('')+ggtitle("Amblyomma SANGcanum")+ylim(0,1)
+  xlab('Month')+ylab('')+ggtitle("Rhipicephalus sanguineus")+ylim(0,1)
 
