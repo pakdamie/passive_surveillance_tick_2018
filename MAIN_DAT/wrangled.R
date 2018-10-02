@@ -134,4 +134,6 @@ PA_SUB$submission <-1
 ##########################################################################
 ##########################################################################
 
+OUT_PA <- subset(SUB_DAT, SUB_DAT$State != 'PA')
 
+aggregate(OUT_PA$submission, by=list(OUT_PA$State, OUT_PA$Species),'sum')
