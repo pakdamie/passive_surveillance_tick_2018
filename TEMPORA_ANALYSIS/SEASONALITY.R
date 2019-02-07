@@ -146,8 +146,8 @@ SCAP_GGPLOT <-ggplot(SCAP_SEASON,aes(x= x, y= prop, fill=x))+scale_fill_viridis(
   geom_bar(color='black',
           stat= 'identity')+ scale_x_discrete(
                    limits= c("Jan","Feb","Mar","Apr","May",
-                             "Jun","Jul","Aug","Sept","Oct","Nov",
-                             "Dec"))+theme_bw()+facet_grid(id~.,switch = 'both')+
+               "Jun","Jul","Aug","Sept","Oct","Nov",
+         "Dec"))+theme_bw()+facet_grid(.~id)+
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())+
   xlab('Month')+ylab('Proportion')+ggtitle("Ixodes scapularis")+
   ylim(0,1)
@@ -177,44 +177,11 @@ COOKEI_SUB_COUNT_G<- ggplot(COOK_SUB_AGG, aes(x= as.factor(Month),y = Prop,
                              "Jun","Jul","Aug","Sept","Oct","Nov",
                              "Dec"))+ggtitle("Ixodes cookei")+ylim(0,0.5)
 
-#################################################
-#################################################
-#########BY DECADES ###############################
-#########################################
 
-COOKEI_SEASON_DEC <- split(COOKEI_SEASON, COOKEI_SEASON$Decade)
-
-DEC_SEASON_COOK<- NULL
-for (i in seq(1, length(COOKEI_SEASON_DEC))){
-  TMP <- COOKEI_SEASON_DEC[[i]]
-  TMP_REP <-na.omit(rep(  TMP $month,   TMP $sub))
-  TMP_REP_COUNT<- data.frame(FREQ= count( TMP_REP))
-  TMP_REP_COUNT$Prop <- TMP_REP_COUNT$FREQ.freq/(sum(TMP_REP_COUNT$FREQ.freq))
-  TMP_REP_COUNT$Decade <- unique(TMP$Decade)
-  DEC_SEASON_COOK[[i]]<- TMP_REP_COUNT
-}
-
-DEC_SEASON_COOK_FINAL <- do.call(rbind, DEC_SEASON_COOK)
-
-ggplot(subset(DEC_SEASON_COOK_FINAL,DEC_SEASON_COOK_FINAL$Decade
-              == '1980-1990'|
-                DEC_SEASON_COOK_FINAL$Decade
-             == '1990-2000'| 
-                DEC_SEASON_COOK_FINAL$Decade
-              == '2000-2010'), 
-       aes(x=FREQ.x, y= Prop))+
-  geom_bar(stat='identity',aes(fill=FREQ.x),color='black')+
-  facet_grid(Decade~.,switch='both')+
-  scale_fill_viridis(guide=FALSE)+
-  scale_x_discrete(name='Month',
-                   limits= c("Jan","Feb","Mar","Apr","May",
-                             "Jun","Jul","Aug","Sept","Oct","Nov",
-                             "Dec"))+theme_bw()+
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
 
 #####################SEASONALITY OF LIFE_STAGES ################################
 
-LIFE_STAG_COOK <- COOKEI_SEASON[, c(13,14,15,16,17,18,19)]
+LIFE_STAG_COOK <- COOKEI_SEASON[, c(13,14,15,16,17,18,19,20)]
 LIFE_STAG_COOK$ADULT <- LIFE_STAG_COOK$Adult_FEM + LIFE_STAG_COOK$Adult_Male
 
 
@@ -276,7 +243,7 @@ COOK_GGPLOT <- ggplot(COOK_SEASON,aes(x= x, y= prop, fill=x))+scale_fill_viridis
            stat= 'identity')+ scale_x_discrete(
              limits= c("Jan","Feb","Mar","Apr","May",
                        "Jun","Jul","Aug","Sept","Oct","Nov",
-                       "Dec"))+theme_bw()+facet_grid(id~.,switch = 'both')+
+                       "Dec"))+theme_bw()+facet_grid(.~id)+
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())+
   xlab('Month')+ylab('')+ylim(0,1)+ggtitle("Ixodes cookei")
 
@@ -313,7 +280,7 @@ VARI_SUB_COUNT_G<- ggplot(VARI_SUB_AGG, aes(x= as.factor(Month),y = Prop,
 
 #####################SEASONALITY OF LIFE_STAGES ################################
 
-LIFE_STAG_VARI <- VARIABILIS_SEASON [, c(13,14,15,16,17,18,19)]
+LIFE_STAG_VARI <- VARIABILIS_SEASON [, c(13,14,15,16,17,18,19,20)]
 LIFE_STAG_VARI$ADULT <- LIFE_STAG_VARI$Adult_FEM + LIFE_STAG_VARI$Adult_Male
 
 
@@ -376,11 +343,11 @@ VARI_GGPLOT <- ggplot(VARI_SEASON,aes(x= x, y= prop, fill=x))+scale_fill_viridis
            stat= 'identity')+ scale_x_discrete(
              limits= c("Jan","Feb","Mar","Apr","May",
                        "Jun","Jul","Aug","Sept","Oct","Nov",
-                       "Dec"))+theme_bw()+facet_grid(id~.,switch = 'both')+
+                       "Dec"))+theme_bw()+facet_grid(.~id)+
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())+
   xlab('Month')+ylab('')+ggtitle("Dermacentor variabilis")+ylim(0,1)
 
-
+grid.arrange(VARI_GGPLOT, COOK_GGPLOT, SCAP_GGPLOT, ncol=1)
 ##############################################
 ##############AMERICANUM########################
 ###########################################
